@@ -14,10 +14,8 @@ class User extends Authenticatable
      */
 
     protected $fillable = [
-        'first_name', '	last_name', 'last_name_initial', 'city', 'state', 'zip_code', 'country', 'upline_email_address', 'username', 'email','ip_address','bitcoin'
+        'first_name', '	last_name', 'last_name_initial', 'city', 'state', 'zip_code', 'country', 'upline_email_address', 'username', 'email','ip_address','bitcoin','tuition','verified'
     ];
-
-
 
 
     /**

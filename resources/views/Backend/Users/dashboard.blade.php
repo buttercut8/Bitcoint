@@ -1,6 +1,9 @@
 @extends('Fontend.layouts.master')
 @section('title','Dashboard')
 @section('content')
+@if(Session::has('confirm-success'))
+    <p class="alert alert-success">{{Session::get('confirm-success')}}</p>
+@endif
 <div class="container">
     <div class="row">
         Dashborad

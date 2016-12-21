@@ -110,18 +110,64 @@
                              </div>
 
                              <div class="field-wrap">
-                               <label>
-                                 State<span class="req">*</span>
-                               </label>
-                               <input type="text" name="state" id="state">
+                               <select class="select_form" name="state" id="state">
+                                   <option value="" class="text-center">State*</option>
+                                   <option value="ALABAMA">ALABAMA</option>
+                                   <option value="ALASKA">ALASKA</option>
+                                   <option value="ARIZONA">ARIZONA</option>
+                                   <option value="ARKANSAS">ARKANSAS</option>
+                                   <option value="CALIFORNIA">CALIFORNIA</option>
+                                   <option value="COLORADO">COLORADO</option>
+                                   <option value="CONNECTICUT">CONNECTICUT</option>
+                                   <option value="DELAWARE">DELAWARE</option>
+                                   <option value="FLORIDA">FLORIDA</option>
+                                   <option value="GEORGIA">GEORGIA</option>
+                                   <option value="HAWAII">HAWAII</option>
+                                   <option value="IDAHO">IDAHO</option>
+                                   <option value="ILLINOIS">ILLINOIS</option>
+                                   <option value="INDIANA">INDIANA</option>
+                                   <option value="IOWA">IOWA</option>
+                                   <option value="KANSAS">KANSAS</option>
+                                   <option value="KENTUCKY">KENTUCKY</option>
+                                   <option value="LOUISIANA">LOUISIANA</option>
+                                   <option value="MAINE">MAINE</option>
+                                   <option value="MARYLAND">MARYLAND</option>
+                                   <option value="MASSACHUSETTS">MASSACHUSETTS</option>
+                                   <option value="MICHIGAN">MICHIGAN</option>
+                                   <option value="MINNESOTA">MINNESOTA</option>
+                                   <option value="MISSISSIPPI">MISSISSIPPI</option>
+                                   <option value="MISSOURI">MISSOURI</option>
+                                   <option value="MONTANA">MONTANA</option>
+                                   <option value="NEBRASKA">NEBRASKA</option>
+                                   <option value="NEVADA">NEVADA</option>
+                                   <option value="NEW HAMPSHIRE">NEW HAMPSHIRE</option>
+                                   <option value="NEW JERSEY">NEW JERSEY</option>
+                                   <option value="NEW MEXICO">NEW MEXICO</option>
+                                   <option value="NEW YORK">NEW YORK</option>
+                                   <option value="NORTH CAROLINA">NORTH CAROLINA</option>
+                                   <option value="NORTH DAKOTA">NORTH DAKOTA</option>
+                                   <option value="OHIO">OHIO</option>
+                                   <option value="OKLAHOMA">OKLAHOMA</option>
+                                   <option value="OREGON">OREGON</option>
+                                   <option value="PENNSYLVANIA">PENNSYLVANIA</option>
+                                   <option value="RHODE ISLAND">RHODE ISLAND</option>
+                                   <option value="SOUTH CAROLINA">SOUTH CAROLINA</option>
+                                   <option value="SOUTH DAKOTA">SOUTH DAKOTA</option>
+                                   <option value="TENNESSEE">TENNESSEE</option>
+                                   <option value="TEXAS">TEXAS</option>
+                                   <option value="UTAH">UTAH</option>
+                                   <option value="VERMONT">VERMONT</option>
+                                   <option value="VIRGINIA">VIRGINIA</option>
+                                   <option value="WASHINGTON">WASHINGTON</option>
+                                   <option value="WEST VIRGINIA">WEST VIRGINIA</option>
+                                   <option value="WISCONSIN">WISCONSIN</option>
+                                   <option value="WYOMING">WYOMING</option>
+                                   <option value="TERRITORIES">TERRITORIES</option>
+                               </select>
                              </div>
 
-
-
                           </div>
-
                         <div class="top-row">
-
                               <div class="field-wrap">
                                <label>
                                  User Name<span class="req">*</span>
@@ -164,7 +210,7 @@
                            <label class="active highlight">
                            BTC Exchange Rate<span class="req"></span>
                            </label>
-                              <input type="text" name="bitcoin" id="bitcoin" disabled="disabled" value="$733.22">
+                              <input type="text" name="bitcoin" id="bitcoin" disabled="disabled" value="">
                          </div>
 
                          <div class="field-wrap">
@@ -281,18 +327,29 @@ $(document).ready(function($){
             }
         });
 
+
         $("#zip_code").keyup(function(e){
             var zip_code = $(this).val();
+            $(this).attr('maxlength',5)
             if(zip_code.length === 5 && $.isNumeric(zip_code))
             var requestURL = "http://ziptasticapi.com/" + zip_code + '?callback=?';
             $.getJSON(requestURL,null,function(data){
-                console.log(data);
+                // console.log(data);
                 $("#country,#state,#city").closest('.field-wrap').find('label').addClass("active");
                 if(data.country) $("#country").val(data.country);
-                if(data.state) $("#state").val(data.state);
+                // if(data.state) $("#state").val(data.state);
                 if(data.city) $("#city").val(data.city);
             });
         });
+
+            var request = new XMLHttpRequest();
+            request.open("GET","https://api.coinbase.com/v2/prices/spot?currency=USD",false);
+            request.send();
+            var vl_api = JSON.parse(request.responseText)
+            // console.log(vl_api);
+            var bitcoin = '$'+vl_api['data']['amount'];
+            $("#bitcoin").val(bitcoin);
+
 
 
         $("#last_name").change(function(){
@@ -304,14 +361,6 @@ $(document).ready(function($){
         $("#modal_terms").click(function(){
             $(".infomation_terms").stop().slideToggle();
         });
-
-      //   $("#show_pass").click(function(){
-      //       if($("#pass_register").attr('type') == "password"){
-      //           $("#pass_register").attr('type','text');
-      //       }else{
-      //           $("#pass_register").attr('type','password');
-      //       }
-      //   });
 
         $(".error_register").hide();
         $(".success_register").hide();

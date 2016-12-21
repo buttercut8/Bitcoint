@@ -11,6 +11,7 @@ use App\Demo;
 use Validator;
 use Session;
 use Input;
+use Mail;
 class UserController extends Controller
 {
     public function Login_Post(Request $request){
@@ -60,9 +61,28 @@ class UserController extends Controller
             $user->upline_email_address = $request->input('upline_email_register');
             $user->bitcoin = $request->input('bitcoin');
             $user->ip_address = $request->input('ip_address');
+            $user->tuition = $request->input('tuition');
+            $user->verified ="0";
+            // $data_signup = [
+            //     'token' => $request->input('token'),
+            //     'first_name' => $request->input('first_name'),
+            //     'email' => $request->input('email_register'),
+            // ];
+            //
+            // Mail::send(['html'=>'Mail.confirm'],$data_signup,function($message) use ($data_signup){
+            //     $message->to($data_signup['email'],$data_signup['first_name'])->subject('Hello'. $data_signup['first_name'].' Verify your email address !');
+            // });
             $user->save();
-            return response()->json(['success'=>'Congratulation ,register member successful !'],200);
+            return response()->json(['success'=>'Thank for signing up ! Please check your email'],200);
         }
+    }
+
+    public function Confirm_Email($token){
+        $user = User::where('token-confirm','=',$token)->first();
+        $users->verified = TRUE;
+        $users->update();
+        Auth::login($users);
+        return redirect()->route('user.dashboard')->with('confirm-success','Congratulation Confirm Email Address Successful !');
     }
 
 

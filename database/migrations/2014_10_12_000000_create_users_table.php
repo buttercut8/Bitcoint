@@ -28,6 +28,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('ip_address',100);
             $table->string('bitcoin',50);
+            $table->string('tuition',50);
+            $table->boolean('verified');
             $table->rememberToken();
             $table->timestamps();
         });

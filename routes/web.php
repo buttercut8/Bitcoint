@@ -28,8 +28,15 @@ Route::group(['middleware'=>['web']],function(){
         'as' => 'user.dashboard',
     ]);
 
+    Route::get('confirm_mail/verify/{token}',[
+        'uses' => 'UserController@Confirm_Email',
+        'as' => 'confirm.email',
+    ]);
 
 
+});
+// Backend Login and Register
+Route::group(['middleware'=>['web']],function(){
     Route::post('login',[
         'uses' => 'Backend\UserController@Login_Post',
         'as' => 'user.login.post',
@@ -38,15 +45,6 @@ Route::group(['middleware'=>['web']],function(){
         'uses' => 'Backend\UserController@Register',
         'as' => 'user.register',
     ]);
-
-
-    // Route::get('demo',function(){
-    //     return view('Backend.Users.demo');
-    // });
-});
-// Backend Login and Register
-Route::group(['middleware'=>['web']],function(){
-
 });
 
 
