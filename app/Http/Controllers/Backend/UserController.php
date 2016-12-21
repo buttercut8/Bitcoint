@@ -6,9 +6,11 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 use App\Http\Requests;
+use App\User;
+use App\Demo;
 use Validator;
 use Session;
-use App\User;
+use Input;
 class UserController extends Controller
 {
     public function Login_Post(Request $request){
@@ -22,7 +24,6 @@ class UserController extends Controller
             ],$message);
             $email = $request->input('email');
             $password = $request->input('password');
-            $remember = $request->input('remember');
             if(!Auth::attempt(['email'=>$email,'password'=>$password],$request->has('remember'))){
                 return response()->json(['error'=>'Email or password not true'],422);
             }
@@ -43,30 +44,23 @@ class UserController extends Controller
                 'pass_register' => 'required|min:4',
                 'email_register' => 'required|email',
             ]);
-            $first_name = $request->input('first_name');
-            $last_name = $request->input('last_name');
-            $last_name_initial = $request->input('last_name_initial');
-            $city = $request->input('city');
-            $state = $request->input('state');
-            $zip_code = $request->input('zip_code');
-            $country = $request->input('country');
-            $username = $request->input('username');
-            $pass_register = $request->input('pass_register');
-            $email_register = $request->input('email_register');
-            $token = $request->input('token');
-            $user = new User();
-            $user->first_name = $first_name;
-            $user->last_name = $last_name;
-            $user->last_name_initial = $last_name_initial;
-            $user->city = $city;
-            $user->state = $state;
-            $user->zip_code = $zip_code;
-            $user->country = $country;
-            $user->username = $username;
-            $user->pass_register = bcrypt($pass_register);
-            $user->email_register = $email_register;
-            $user->remember_token = $token;
-            // $user->save();
+
+            $user = new User;
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->last_name_initial = $request->input('last_name_initial');
+            $user->city = $request->input('city');
+            $user->state = $request->input('state');
+            $user->zip_code = $request->input('zip_code');
+            $user->country = $request->input('country');
+            $user->username = $request->input('username');
+            $user->password = bcrypt($request->input('pass_register'));
+            $user->email = $request->input('email_register');
+            $user->remember_token = $request->input('token');
+            $user->upline_email_address = $request->input('upline_email_register');
+            $user->bitcoin = $request->input('bitcoin');
+            $user->ip_address = $request->input('ip_address');
+            $user->save();
             return response()->json(['success'=>'Congratulation ,register member successful !'],200);
         }
     }

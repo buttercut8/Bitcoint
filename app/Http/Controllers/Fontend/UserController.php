@@ -12,8 +12,11 @@ use App\User;
 class UserController extends Controller
 {
     public function Login(){
-        return view('Backend.Users.login');
+        return view('Backend.Users.login2');
     }
+    // public function Login(){
+    //     return view('Backend.Users.login');
+    // }
 
     public function Dashboard(){
         return view('Backend.Users.dashboard');
